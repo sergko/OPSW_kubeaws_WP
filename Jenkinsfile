@@ -4,6 +4,7 @@ pipeline {
     stage('build') {
       steps {
         sh 'make build'
+        sh 'export GOPATH=/var/lib/jenkins/go'
       }
     }
     stage('kube-aws init') {
