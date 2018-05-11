@@ -3,10 +3,6 @@ pipeline {
   stages {
     stage('build') {
       steps {
-        sh 'echo $WORKSPACE'
-        sh 'export GOPATH=$HOME/go'
-        sh 'echo $GOPATH'
-        sh 'ln -sf $WORKSPACE  $GOPATH/src/github.com/kubernetes-incubator/kube-aws'
         sh 'make build'
       }
     }
