@@ -3,8 +3,8 @@ pipeline {
   stages {
     stage('build') {
       steps {
+        sh 'echo $WORKSPACE'
         sh 'make build'
-        sleep 1
       }
     }
     stage('kube-aws init') {
