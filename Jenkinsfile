@@ -4,9 +4,9 @@ pipeline {
     stage('build') {
       steps {
         sh 'echo $WORKSPACE'
-        sh 'make build'
         sh '''sed -i \'s/github.com\\/kubernetes-incubator\\/kube-aws\\/cmd/$WORKSPACE/g\' ./main.go
 '''
+        sh 'make build'
       }
     }
     stage('kube-aws init') {
