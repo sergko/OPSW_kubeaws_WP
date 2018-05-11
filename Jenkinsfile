@@ -3,7 +3,8 @@ pipeline {
   stages {
     stage('Start') {
       steps {
-	sh 'whoami'
+        sh 'whoami'
+        sleep 1
       }
     }
   }
