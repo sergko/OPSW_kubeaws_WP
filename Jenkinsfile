@@ -19,9 +19,9 @@ pipeline {
 --s3-uri=s3://kube-aws-ops-small-bucket \\
 --external-dns-name=kube-aws-ops-small-cluster \\
 --no-record-set'''
-        sh 'sed -i -e 's/# *instanceType: t2.medium/instanceType: t2.small/g' \
+        sh '''sed -i -e 's/# *instanceType: t2.medium/instanceType: t2.small/g' \
 -e 's/#workerInstanceType: t2.medium/workerInstanceType: t2.small/g' \
-cluster.yaml'
+cluster.yaml'''
         sh 'kube-aws render credentials --generate-ca'
 	sh 'kube-aws render stack'
 	sh 'kube-aws validate'
