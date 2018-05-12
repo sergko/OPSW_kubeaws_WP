@@ -10,7 +10,6 @@ pipeline {
     }
     stage('kube-aws init') {
       steps {
-        sh 'cd $WORKSPACE/kube-aws-assets'
         sh '''kube-aws init \\
 --cluster-name=my-$KUBE_CLUSTER_NAME \\
 --region=eu-west-2 \\
@@ -20,7 +19,13 @@ pipeline {
 --s3-uri=s3://kube-aws-ops-bucket \\
 --external-dns-name=kube-aws-ops-cluster \\
 --hosted-zone-id=ZZRMO7GMYBUIP'''
-        sh 'cd ..'
+        sh 'kube-aws render credentials --generate-ca'
+	sh 'kube-aws render stack'
+	sh 'kube-aws validate'
+      }
+    stage('kube start') {
+      steps {
+        sh 'kube-aws up'
       }
     }
   }
