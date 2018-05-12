@@ -23,6 +23,7 @@ pipeline {
 	sh 'kube-aws render stack'
 	sh 'kube-aws validate'
       }
+    }
     stage('kube start') {
       steps {
         sh 'kube-aws up'
