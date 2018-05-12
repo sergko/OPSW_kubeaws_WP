@@ -11,7 +11,7 @@ pipeline {
     stage('kube-aws init') {
       steps {
         sh '''kube-aws init \\
---cluster-name=kube_clust \\
+--cluster-name=kube-clust \\
 --region=eu-west-2 \\
 --availability-zone=eu-west-2a \\
 --key-name=sergey.k \\
