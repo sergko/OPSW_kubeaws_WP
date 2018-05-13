@@ -17,8 +17,8 @@ pipeline {
 --key-name=sergey.k \\
 --kms-key-arn="arn:aws:kms:eu-west-2:717986625066:key/6db2ca6d-f86b-42c2-8ab2-4d2416d15a0d" \\
 --s3-uri=s3://kube-aws-ops-small-bucket \\
---external-dns-name=kube-aws-ops-small-cluster \\
---no-record-set'''
+--external-dns-name=kube-aws-ops-small-cluster.zeolan.pp.ua \\
+--hosted-zone-id=ZZRMO7GMYBUIP'''
         sh 'sed -i -e \'s/#workerInstanceType: t2.medium/workerInstanceType: t2.small/g\' cluster.yaml '
         sh 'kube-aws render credentials --generate-ca'
         sh 'kube-aws render stack'
