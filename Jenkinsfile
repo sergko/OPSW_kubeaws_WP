@@ -23,7 +23,7 @@ pipeline {
       instanceType: t2.small\' cluster.yaml'''
         sh '''sed -i -e \'/#etcd:/i \\
 etcd:\\
-instanceType: t2.small\' cluster.yaml'''
+  instanceType: t2.small\' cluster.yaml'''
         sh '''sed -i -e \'/#controller:/i \\
 controller:\\
   instanceType: t2.small\' cluster.yaml'''
