@@ -3,18 +3,6 @@ pipeline {
   stages {
     stage('build') {
       steps {
-        sh '''JOB=`echo $JOB_NAME | cut -d / -f1`
-sleep 20
-echo $JOB
-BRANCH=`echo $JOB_NAME | cut -d / -f2`
-echo $BRANCH
-LOG="$HOME/jobs/$JOB/branches/$BRANCH/builds/$BUILD_NUMBER/log"
-echo $LOG
-NS=`tail -n 100 $LOG | grep "Controller DNS Names:" | awk \'{ print $4 }\'`
-echo $NS
-sed -i -e \'s/route53replacement/\'$NS\'/g\' route53-wordpress.json
-cat route53-wordpress.json
-sleep 1000'''
         sh 'make build'
         sh 'sudo cp ./bin/kube-aws /usr/bin'
       }
@@ -57,6 +45,16 @@ controller:\\
         sh 'kubectl --kubeconfig=kubeconfig create -f deployment-wordpress.yaml'
         sh 'kubectl --kubeconfig=kubeconfig create -f service-wordpress.yaml'
         sh 'kubectl --kubeconfig=kubeconfig describe service wordpress'
+        sh '''JOB=`echo $JOB_NAME | cut -d / -f1`
+#echo $JOB
+BRANCH=`echo $JOB_NAME | cut -d / -f2`
+#echo $BRANCH
+LOG="$HOME/jobs/$JOB/branches/$BRANCH/builds/$BUILD_NUMBER/log"
+#echo $LOG
+NS=`tail -n 100 $LOG | grep "Controller DNS Names:" | awk \'{ print $4 }\'`
+#echo $NS
+sed -i -e \'s/route53replacement/\'$NS\'/g\' route53-wordpress.json
+cat route53-wordpress.json'''
         sh 'aws route53 change-resource-record-sets --hosted-zone-id ZZRMO7GMYBUIP --change-batch file://route53-wordpress.json'
       }
     }
