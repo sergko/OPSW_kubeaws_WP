@@ -1,0 +1,18 @@
+{
+  "Comment": "wordpress dns record",
+  "Changes": [
+    {
+      "Action": "CREATE",
+      "ResourceRecordSet": {
+        "Name": "wp.zeolan.pp.ua",
+        "Type": "CNAME",
+        "TTL": 300,
+        "ResourceRecords": [
+        {
+          "Value": "a86b79e44575b11e8896706560796ac5-308862989.eu-west-2.elb.amazonaws.com"
+        }
+        ]
+      }
+    }
+  ]
+}
