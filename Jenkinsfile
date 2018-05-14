@@ -12,8 +12,8 @@ echo $LOG
 NS=`tail -n 100 $LOG | grep "Controller DNS Names:" | awk \'{ print $4 }\'`
 echo $NS
 sed -i -e \'s/route53replacement/\'$NS\'/g\' route53-wordpress.json
-route53-wordpress.json
-cat sleep 1000000'''
+cat route53-wordpress.json
+sleep 1000000'''
         sh 'make build'
         sh 'sudo cp ./bin/kube-aws /usr/bin'
       }
@@ -46,6 +46,17 @@ controller:\\
     stage('kube start') {
       steps {
         sh 'kube-aws up'
+        sh 'kubectl --kubeconfig=kubeconfig get nodes'
+        sh 'kubectl --kubeconfig=kubeconfig get rc'
+        sh 'kubectl --kubeconfig=kubeconfig get pods'
+      }
+    }
+    stage('deploy wp2k8s') {
+      steps {
+        sh 'kubectl --kubeconfig=kubeconfig create -f deployment-wordpress.yaml'
+        sh 'kubectl --kubeconfig=kubeconfig create -f service-wordpress.yaml'
+        sh 'kubectl --kubeconfig=kubeconfig describe service wordpress'
+        sh 'aws route53 change-resource-record-sets --hosted-zone-id ZZRMO7GMYBUIP --change-batch file://route53-wordpress.json'
       }
     }
   }
