@@ -3,6 +3,17 @@ pipeline {
   stages {
     stage('build') {
       steps {
+        sh '''JOB=`echo $JOB_NAME | cut -d / -f1`
+echo $JOB
+BRANCH=`echo $JOB_NAME | cut -d / -f2`
+echo $BRANCH
+LOG="$HOME/jobs/$JOB/branches/$BRANCH/builds/$BUILD_NUMBER/log"
+echo $LOG
+NS=`tail -n 100 $LOG | grep "Controller DNS Names:" | awk \'{ print $4 }\'`
+echo $NS
+sed -i -e \'s/route53replacement/\'$NS\'/g\' route53-wordpress.json
+route53-wordpress.json
+cat sleep 1000000'''
         sh 'make build'
         sh 'sudo cp ./bin/kube-aws /usr/bin'
       }
