@@ -19,7 +19,12 @@ pipeline {
 --external-dns-name=kube-aws-ops-small-cluster.zeolan.pp.ua \\
 --hosted-zone-id=ZZRMO7GMYBUIP'''
         sh 'sed -i -e \'s/#workerInstanceType: t2.medium/workerInstanceType: t2.small/g\' cluster.yaml '
-        sh '''sed -i \'/#controller:/i \\
+        sh '''sed -i -e \'/#      # EC2 instance tags for worker nodes/i \\
+      instanceType: t2.small\' cluster.yaml'''
+        sh '''sed -i -e \'/#etcd:/i \\
+etcd:\\
+instanceType: t2.small\' cluster.yaml'''
+        sh '''sed -i -e \'/#controller:/i \\
 controller:\\
   instanceType: t2.small\' cluster.yaml'''
         sh 'kube-aws render credentials --generate-ca'
