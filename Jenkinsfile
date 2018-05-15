@@ -10,13 +10,13 @@ pipeline {
     stage('kube-aws init') {
       steps {
         sh '''kube-aws init \\
---cluster-name=kube-sm2 \\
+--cluster-name=kube-sm3 \\
 --region=eu-west-2 \\
 --availability-zone=eu-west-2a \\
 --key-name=sergey.k \\
 --kms-key-arn="arn:aws:kms:eu-west-2:717986625066:key/6db2ca6d-f86b-42c2-8ab2-4d2416d15a0d" \\
 --s3-uri=s3://kube-aws-ops-small-bucket \\
---external-dns-name=kube-aws-ops-sm2-cluster.zeolan.pp.ua \\
+--external-dns-name=kube-aws-ops-sm3-cluster.zeolan.pp.ua \\
 --hosted-zone-id=ZZRMO7GMYBUIP'''
         sh 'sed -i -e \'s/#workerInstanceType: t2.medium/workerInstanceType: t2.small/g\' cluster.yaml '
         sh '''sed -i -e \'/#      # EC2 instance tags for worker nodes/i \\
