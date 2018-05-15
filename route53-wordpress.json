@@ -2,7 +2,7 @@
   "Comment": "wordpress dns record",
   "Changes": [
     {
-      "Action": "CREATE",
+      "Action": "UPSERT",
       "ResourceRecordSet": {
         "Name": "wp.zeolan.pp.ua",
         "Type": "CNAME",
