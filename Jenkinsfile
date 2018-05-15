@@ -56,6 +56,8 @@ kubectl --kubeconfig=kubeconfig describe service wordpress
 sed -i -e \'s/route53replacement/\'$NS\'/g\' route53-wordpress.json
 cat route53-wordpress.json'''
         sh 'aws route53 change-resource-record-sets --hosted-zone-id ZZRMO7GMYBUIP --change-batch file://route53-wordpress.json'
+        sh 'kubectl --kubeconfig=kubeconfig get rc'
+        sh 'kubectl --kubeconfig=kubeconfig get pods'
       }
     }
   }
