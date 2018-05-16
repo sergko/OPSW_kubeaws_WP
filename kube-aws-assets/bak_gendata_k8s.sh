@@ -1,6 +1,16 @@
 #!/bin/sh
 #save generated data for future operate with cluster
-mkdir -p /opt/OPSWP/$JOB_NAME/$BUILD_NUMBER
+if [ -z $JOB_NAME ]
+then
+JOB_NAME=master
+fi
+
+if [ -z $BUILD_NUMBER ]
+then
+BUILD_NUMBER=`date +%y%m%d_%H%M`
+fi
+
+mkdir -p "/opt/OPSWP/$JOB_NAME/$BUILD_NUMBER"
 cp -r ./credentials /opt/OPSWP/$JOB_NAME/$BUILD_NUMBER
 cp -r ./userdata /opt/OPSWP/$JOB_NAME/$BUILD_NUMBER
 cp -r ./stack-templates /opt/OPSWP/$JOB_NAME/$BUILD_NUMBER
